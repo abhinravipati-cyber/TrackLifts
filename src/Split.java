@@ -19,6 +19,8 @@ public class Split {
 		}
 	}
 	
+	// for loops ruins as many times as how many days there are, and then gets input for a name for the day and then makes a workoutDay object
+	// and then adds that new workout day to the day List of the split
 	void populate_split(int splitLength) {
 		for(int i = 0; i < splitLength; i++) {
 			System.out.println("Make a name for day " + (i + 1) + ":");

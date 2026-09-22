@@ -28,4 +28,8 @@ public class User {
 	int get_split_count() {
 		return userSplits.size();
 	}
-}
+	
+	CompletedDay get_completed_day(int i) {
+		return userHistory.get(i);
+		}
+	}

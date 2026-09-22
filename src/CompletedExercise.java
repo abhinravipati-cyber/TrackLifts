@@ -6,16 +6,19 @@ public class CompletedExercise {
 	Scanner scanner = new Scanner(System.in);
 	
 	Exercise _exercise;
+	
+	String name;
 	 
 	ArrayList<CompletedSet> completedSetList = new ArrayList<>();
 	
 	public CompletedExercise(Exercise exercise) {
 		_exercise = exercise;
+		name = _exercise.get_name();
 	}
 	
 	void populate_completed_set_list() {
 		System.out.println("\n");
-		System.out.println(_exercise.get_name() + "\n");
+		System.out.println(name + "\n");
 		System.out.println("Enter the weight and rep counts for each set in this format one at a time ( WEIGHT(lbs), # OF REPS )");
 		System.out.println("Type 'done' when you have finished logging this exercise");
 		
@@ -43,5 +46,9 @@ public class CompletedExercise {
 	
 	int get_completed_set_count(){
 		return completedSetList.size();
+	}
+	
+	String get_name() {
+		return name;
 	}
 }
