@@ -1,27 +1,27 @@
 
 public class Exercise {
 	
-	private String _name;
-	private int _sets_quantity;
+	private String name;
+	private int setsQuantity;
 	
-	public Exercise(String name, int sets_quantity) {
-		set_name(name);
-		set_sets_quantity(sets_quantity);
+	public Exercise(String name, int setsQuantity) {
+		setName(name);
+		setSetsQuantity(setsQuantity);
 	}
 	
-	void set_sets_quantity(int sets_quantity) {
-		_sets_quantity = sets_quantity;
+	void setSetsQuantity(int setsQuantity) {
+		this.setsQuantity = setsQuantity;
 	}
 	
-	int get_sets_quantity() {
-		return _sets_quantity;
+	int getSetsQuantity() {
+		return setsQuantity;
 	}
 	
-	void set_name(String name) {
-		_name = name;
+	void setName(String name) {
+		this.name = name;
 	}
 	
-	String get_name() {
-		return _name;
+	String getName() {
+		return name;
 	}
 }

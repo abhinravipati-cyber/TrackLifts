@@ -3,56 +3,52 @@ import java.util.ArrayList;
 
 public class CompletedDay {
 
-	String _date;
-	WorkoutDay _workoutDay;
+	String date;
+	WorkoutDay workoutDay;
 	String name;
 	int workoutLength;
 	
 	ArrayList<CompletedExercise> completedExerciseList = new ArrayList<>();
 	
 	public CompletedDay(String date, WorkoutDay workoutDay) {
-		set_date(date);
-		_workoutDay = workoutDay;
-		name = _workoutDay.get_name();
-		workoutLength = _workoutDay.get_workout_length();
+		setDate(date);
+		this.workoutDay = workoutDay;
+		name = workoutDay.getName();
+		workoutLength = workoutDay.getWorkoutLength();
 	}
 	
 	//creates all completed exercise while passing in the regular Exercise as an argument
-	void autofill_completed_exercises() {
+	void autofillCompletedExercises() {
 		
-		for(int i = 0, n = _workoutDay.get_workout_length(); i < n; i++) {
-			CompletedExercise completedExercise = new CompletedExercise(_workoutDay.get_exercise(i));
+		for(int i = 0, n = workoutDay.getWorkoutLength(); i < n; i++) {
+			CompletedExercise completedExercise = new CompletedExercise(workoutDay.getExercise(i));
 			
 			completedExerciseList.add(completedExercise);
 		}
 		
 	}
 	
-	void set_date(String date) {
-		_date = date;
+	void setDate(String date) {
+		this.date = date;
 	}
 	
-	void add_completed_exercise(int i) {
-		completedExerciseList.get(i).populate_completed_set_list();
-	}
-	
-	CompletedExercise get_completed_exercise(int i ) {
+	CompletedExercise getCompletedExercise(int i ) {
 		return completedExerciseList.get(i);
 	}
 	
-	String get_date() {
-		return _date;
+	String getDate() {
+		return date;
 	}
 	
-	WorkoutDay get_workout_day() {
-		return _workoutDay;
+	WorkoutDay getWorkoutDay() {
+		return workoutDay;
 	}
 	
-	String get_name() {
+	String getName() {
 		return name;
 	}
 	
-	int get_workout_length() {
+	int getWorkoutLength() {
 		return workoutLength;
 	}
 }
