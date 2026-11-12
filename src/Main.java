@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -121,25 +122,32 @@ public class Main {
 	
 	// gets input for each set of a completed exercise (weight and reps) until the user types done
 	static void populateCompletedSetList(CompletedExercise completedExercise) {
-		System.out.println("\n");
-		System.out.println(completedExercise.getName() + "\n");
+		System.out.println(completedExercise.getName());
 		System.out.println("Enter the weight and rep counts for each set in this format one at a time ( WEIGHT(lbs), # OF REPS )");
-		System.out.println("Type 'done' when you have finished logging this exercise");
-		
-		do {
-			
-			String[] parts = scanner.nextLine().split("," );
-			
-			if (parts[0].equals("done")) {
+		System.out.println("Enter \"done\" when you are finished");
+
+		while(true) {
+			String[] parts = scanner.nextLine().split(",");
+
+			if (parts.length > 0 && parts[0].trim().toLowerCase().equals("done")) {
 				break;
 			}
-			
-			int weight = Integer.parseInt(parts[0].trim());
-			int repCount = Integer.parseInt(parts[1].trim());
-			
-			completedExercise.addCompletedSet(new CompletedSet(repCount, weight));
-			
-		} while(true);  
+			if (parts.length != 2 || parts[0].trim().isEmpty()) {
+				System.out.println("Your input should be a comma separated list \n Example \"135, 3\"");
+				continue;
+			}
+			try {
+				int weight = Integer.parseInt(parts[0].trim());
+				int repCount = Integer.parseInt(parts[1].trim());
+				if (weight < 0 || repCount < 0) {
+					System.out.println("How'd you move negative weight?!");
+					continue;
+				}
+				completedExercise.addCompletedSet(new CompletedSet(repCount, weight));
+			} catch (NumberFormatException e) {
+				System.out.println("Should be two numbers");
+			}
+		}
 	}
 	//display previously logged workout 
 	static void displayLog(CompletedDay completedDay1) {
@@ -166,7 +174,7 @@ public class Main {
 				res = Integer.parseInt(input);
 				return res;
 			} catch (NumberFormatException e) {
-				System.out.println("Wrong input format. Please enter an integer in numeric form. \n Example: \"9\"");
+				System.out.println("Wrong input format. Please enter an integer in numeric form. \n Example: \"2\"");
 			}
 		}
 	}
@@ -194,5 +202,7 @@ public class Main {
 		}
 	}
 }
+
+
 
 
