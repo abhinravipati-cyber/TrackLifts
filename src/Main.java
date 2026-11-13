@@ -6,55 +6,64 @@ public class Main {
 	//this is the main method
 	public static void main(String[] args) {
 
-		
-		// this will later determine what will happen during this program usage
-		int iniResponse = readInt("Would you like to (1) make a split, (2) view a split, (3) log a workout");
-		
 		// user1 is a variable that points to a User type object
 		User user1 = new User();
-				
-		// user inputs 1, so they will be able to create a split
-		if(iniResponse == 1) {	
-			Split newSplit = createSplit();	
-			user1.addSplit(newSplit);
-			displaySplit(newSplit);				
-		}
-		// user inputs 2, so they will choose a split and then that split will be displayed 
-		else if (iniResponse == 2) {
-			System.out.print("Which split do you want to display? ");
-			for(int i = 0, n = user1.getSplitCount(); i < n; i++) {
-				System.out.print(" (" + (i + 1) + ") " + user1.getSplit(i).getName());
+
+		while(true){
+			// this will later determine what will happen during this program usage
+			int iniResponse = readInt("Would you like to (1) make a split, (2) view a split, (3) log a workout, (4) quit");
+
+			// user inputs 1, so they will be able to create a split
+			if(iniResponse == 1) {
+				Split newSplit = createSplit();
+				user1.addSplit(newSplit);
+				displaySplit(newSplit);
 			}
-			// readInt("") prints the newline that ends the list above
-			int splitIdentifier = readInt("") - 1;
-			
-			displaySplit(user1.getSplit(splitIdentifier));
-		}
-		//user inputs 3, so they will have the option to log a workout
-		else if (iniResponse == 3) {
-			for (int i = 0, n = user1.getSplitCount(); i < n; i++) {
-		        System.out.print(" (" + (i + 1) + ") " + user1.getSplit(i).getName());
-		    }
-		    // readInt("") prints the newline that ends the list above
-		    int splitIdentifier = readInt("") - 1;
-		    Split selectedSplit = user1.getSplit(splitIdentifier);
-		    CompletedDay completedDay = logWorkout(selectedSplit);
-		    user1.addCompletedDay(completedDay);
-		    displayLog(completedDay);
+			// user inputs 2, so they will choose a split and then that split will be displayed
+			else if (iniResponse == 2) {
+				if(user1.getSplitCount() == 0){
+					System.out.println("no splits to display kid :(");
+					continue;
+				}
+				System.out.print("Which split do you want to display? ");
+				for(int i = 0, n = user1.getSplitCount(); i < n; i++) {
+					System.out.print(" (" + (i + 1) + ") " + user1.getSplit(i).getName());
+				}
+				// readInt("") prints the newline that ends the list above
+				int splitIdentifier = readInt("", 1, user1.getSplitCount()) - 1;
+				displaySplit(user1.getSplit(splitIdentifier));
 			}
-		else {
-			System.out.println("Invalid Response");
-			return;
+			//user inputs 3, so they will have the option to log a workout
+			else if (iniResponse == 3) {
+				if(user1.getSplitCount() ==0){
+					System.out.println("create a split before you can log a workout!");
+					continue;
+				}
+				System.out.print("Which split are you logging for? ");
+				for (int i = 0, n = user1.getSplitCount(); i < n; i++) {
+					System.out.print(" (" + (i + 1) + ") " + user1.getSplit(i).getName());
+				}
+				// readInt("") prints the newline that ends the list above
+				int splitIdentifier = readInt("", 1, user1.getSplitCount()) - 1;
+				Split selectedSplit = user1.getSplit(splitIdentifier);
+				CompletedDay completedDay = logWorkout(selectedSplit);
+				user1.addCompletedDay(completedDay);
+				displayLog(completedDay);
+			}
+			else if(iniResponse == 4){
+				System.out.println("Sorry to see u go :(");
+				break;
+			}
+			else {
+				System.out.println("Invalid Response");
+			}
 		}
-		
-		CompletedDay completedDay = logWorkout(user1.getSplit(0));
-		user1.addCompletedDay(completedDay);
-		displayLog(user1.getCompletedDay(0));
+
 	}
 		
 		
 	//creates the split and returns back a new split to a variable in the main method 
-		static Split createSplit() {
+	static Split createSplit() {
 			// gets input for name of the new split and then make a new split object with that name 
 			System.out.println("Name your split below:");
 			String splitName = scanner.nextLine();
@@ -78,7 +87,7 @@ public class Main {
 			}
 			return split1;	
 		}
-	
+
 	// gets input for each exercise on a workout day (name and number of sets) and adds them to that workout day
 	static void populateWorkoutDay(WorkoutDay day, int workoutLength) {
 		for(int i = 0; i < workoutLength; i++) {
@@ -107,8 +116,7 @@ public class Main {
 			System.out.print(" (" + (i + 1) + ") " + split1.getWorkoutDay(i).getName());
 		}
 		// readInt("") prints the newline that ends the list above
-		int dayIdentifier = readInt("") - 1;
-
+		int dayIdentifier = readInt("", 1, split1.getSplitLength()) - 1;
 		// create new completedDay
 		CompletedDay completedDay1 = new CompletedDay(date, split1.getWorkoutDay(dayIdentifier));
 		
@@ -175,6 +183,20 @@ public class Main {
 				return res;
 			} catch (NumberFormatException e) {
 				System.out.println("Wrong input format. Please enter an integer in numeric form. \n Example: \"2\"");
+			}
+		}
+	}
+
+	// same as readInt(prompt), but keeps asking until the number is between min and max (inclusive)
+	static int readInt(String prompt, int min, int max){
+		int res;
+		while(true){
+			res = readInt(prompt);
+			if(res < min || res > max){
+				System.out.println("choose from one of the options!");
+			}
+			else{
+				return res;
 			}
 		}
 	}
